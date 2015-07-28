@@ -1,0 +1,20 @@
+- name: Enableling OpenVPN service in firewalld ( runtime )
+  shell: firewall-cmd --add-service openvpn
+
+- name: Enableling OpenVPN service in firewalld ( permanent )
+  shell: firewall-cmd --permanent --add-service openvpn
+
+- name: Enableing masqueradeing ( runtime )
+  shell: firewall-cmd --add-masquerade
+
+- name: Enableing masqueradeing ( permanent )
+  shell: firewall-cmd --permanent --add-masquerade
+  notify: Restart firewalld
+
+- name: Verify masquerade is enabled
+  shell: firewall-cmd --query-masquerade
+  register: masquerade_enabled
+
+- assert:
+    that:
+      masquerade_enabled.stdout == "yes"

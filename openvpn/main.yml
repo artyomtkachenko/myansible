@@ -1,0 +1,31 @@
+---
+# Used this guide as a reference
+# https://www.digitalocean.com/community/tutorials/how-to-setup-and-configure-an-openvpn-server-on-centos-7
+- hosts: all
+  sudo: yes
+  sudo_user: root
+  connection: ssh
+  gather_facts: no
+  vars:
+    easy_rsa_dir: /etc/openvpn/easy-rsa
+  environment:
+    EASY_RSA:    "{{ easy_rsa_dir }}"
+    OPENSSL:     openssl
+    KEY_CONFIG:  "{{ easy_rsa_dir }}/openssl.cnf"
+    PKCS11TOOL:  pkcs11-tool
+    GREP:        grep
+    KEY_DIR:     "{{ easy_rsa_dir }}/keys"
+    PKCS11_PIN:  dummy
+    KEY_SIZE:    2048
+    CA_EXPIRE:   3650
+    KEY_EXPIRE:  3650
+    KEY_COUNTRY:  HZ
+    KEY_PROVINCE: HZ
+    KEY_CITY:     Whatever
+    KEY_ORG:      Madhouse
+    KEY_EMAIL:    "me@myhost.mydomain"
+    KEY_OU:       N6
+    KEY_NAME:     server
+    PKCS11_MODULE_PATH: dummy
+  roles:
+    - openvpn

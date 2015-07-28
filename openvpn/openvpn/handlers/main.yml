@@ -1,0 +1,12 @@
+---
+# handlers file for openvpn
+- name: Restart firewalld
+  service:
+    name: firewalld.service
+    state: restarted
+  notify: Restart network.service
+
+- name: Restart network.service
+  service:
+    name: network.service
+    state: restarted
